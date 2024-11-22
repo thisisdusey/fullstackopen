@@ -26,7 +26,7 @@ const App = () => {
 
   const total = (good+neutral+bad)
   const average = (good+neutral+bad)/3
-  const positive = (good/total)*100
+  const positive = Number.isFinite(good / total)*100 ? good / total : 0
 
   return (
     <div>
@@ -34,7 +34,10 @@ const App = () => {
       <Button onClick={handleGoodClick}buttonName='good'/>
       <Button onClick={handleNeutralClick}buttonName='neutral'/>
       <Button onClick={handleBadClick}buttonName = 'bad'/>
+
       <h1>statistics</h1>
+      {total> 0 ? (
+      <div>
       <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
@@ -42,6 +45,10 @@ const App = () => {
   <Statistics statName = 'Average' stat={average}/>
   <Statistics statName = 'Positive' stat={positive}/>
     </div>
+  ) : (
+  <p>No Feedback Given</p>
+)}
+</div>
   )
 }
 
