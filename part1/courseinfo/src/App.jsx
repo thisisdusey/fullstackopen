@@ -1,10 +1,27 @@
 import { useState } from 'react'
 
-const Statistics = (props) =>{
+const StatisticLine = (props) => {
   return(
-    <div>{props.statName} {props.stat}</div>
+  <div>{props.text} :{props.value}</div>
   )
 }
+
+const Statistics = ({ good, neutral, bad, total, average, positive }) =>{
+  if (total === 0) {
+    return <p>No feedback given</p>;
+  }
+
+  return (
+    <div>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="All" value={total} />
+      <StatisticLine text="Average" value={average.toFixed(2)} />
+      <StatisticLine text="Positive" value={`${positive.toFixed(2)} %`} />
+    </div>
+  );
+};
 
 const App = () => {
   // save clicks of each button to its own state
@@ -25,7 +42,7 @@ const App = () => {
   }
 
   const total = (good+neutral+bad)
-  const average = (good+neutral+bad)/3
+  const average = (good-bad)/total
   const positive = Number.isFinite(good / total)*100 ? good / total : 0
 
   return (
@@ -34,23 +51,17 @@ const App = () => {
       <Button onClick={handleGoodClick}buttonName='good'/>
       <Button onClick={handleNeutralClick}buttonName='neutral'/>
       <Button onClick={handleBadClick}buttonName = 'bad'/>
-
       <h1>statistics</h1>
-      {total> 0 ? (
-      <div>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-  <Statistics statName = 'All' stat={total}/>
-  <Statistics statName = 'Average' stat={average}/>
-  <Statistics statName = 'Positive' stat={positive}/>
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        total={total}
+        average={average}
+        positive={positive}
+      />
     </div>
-  ) : (
-  <p>No Feedback Given</p>
-)}
-</div>
-  )
-}
+    )}
 
 const Button = (props) =>{
   return(
