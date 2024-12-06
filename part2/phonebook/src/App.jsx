@@ -15,9 +15,9 @@ const App = (props) => {
 
   useEffect(() => {
     phonebookService.getAll().then((initialPeople) => {
-      setPersons(Array.isArray(initialPeople) ? initialPeople : []);
-    })
-  }), [];
+      setPersons(initialPeople);
+    });
+  }, []);
 
 
   const addPerson = (event) => {
