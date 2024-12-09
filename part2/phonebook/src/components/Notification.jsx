@@ -26,6 +26,8 @@ let messageStyle = {
       <div style={type === "update" 
         ? messageStyle.update 
         : type ==="delete" 
+        ? messageStyle.delete
+        : type ==="error" 
         ? messageStyle.delete : null }>
         {message}
       </div>

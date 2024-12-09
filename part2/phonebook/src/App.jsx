@@ -74,7 +74,10 @@ const App = (props) => {
         setNewNumber("");
       })
       .catch((error) => {
-        setNotificationMessage("Failed to add the person. Please try again.");
+        setNotificationMessage({
+          message: error.response.data.error || "An error occurred!",
+          type: "error"
+        });
     setTimeout(() => setNotificationMessage(null), 5000);
       });
 
